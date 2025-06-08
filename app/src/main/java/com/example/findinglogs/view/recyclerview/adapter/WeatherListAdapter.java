@@ -57,6 +57,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         }
 
         public void holdWeather(Weather weather, Context context) {
+            Log.d("WeatherAdapter", "Cidade: " + weather.getName() + " | Icon: " + weather.getWeather().get(0).getIcon());
             switch (weather.getWeather().get(0).getIcon()){
                 case "02d":
                     cardView.setCardBackgroundColor(context.getColor(R.color.weather_few_clouds));
@@ -96,7 +97,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
             String temp_min_value = "Temp. mín: " +
                     Utils.getCelsiusTemperatureFromKevin(weather.getMain().getTemp_min());
             temp_min.setText(temp_min_value);
-            String pressure_value = "Pressão: " + 1008.2 + "hPa";
+            String pressure_value = "Pressão: " + weather.getMain().getPressure() + "hPa";  // provavelemte se deve ao fato de que existe um valor de pressão hard coded no metodo. Acho que adap´tar a chamada de função das temperaturas  para pressão deve resolver
             pressure.setText(pressure_value);
             String humidity_value = "Umidade: " + weather.getMain().getHumidity() + "%";
             humidity.setText(humidity_value);
@@ -115,6 +116,10 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Weather weather = weathers.get(position);
+        Log.d("WeatherAdapter", "onBindViewHolder: " + weather.getName() +
+                " | temp=" + weather.getMain().getTemp() +
+                " | temp_max=" + weather.getMain().getTemp_max() +
+                " | temp_min=" + weather.getMain().getTemp_min());
         holder.holdWeather(weather, context);
     }
 
@@ -125,6 +130,10 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     public void updateWeathers(List<Weather> weathersValues) {
         weathers.clear();
+        for (Weather w : weathersValues) {
+            Log.d("WeatherAdapter", "updateWeathers: " + w.getName() +
+                    " | temp=" + w.getMain().getTemp());
+        }
         weathers.addAll(weathersValues);
         notifyDataSetChanged();
     }

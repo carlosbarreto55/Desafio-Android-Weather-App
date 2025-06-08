@@ -46,7 +46,7 @@ public class MainViewModel extends AndroidViewModel {
 
     private void fetchAllForecasts() {
         if (Logger.ISLOGABLE) Logger.d(TAG, "fetchAllForecasts()");
-        HashMap<String, String> localizations = mRepository.getLocalizations();
+        HashMap<String, String> localizations = mRepository.getLocalizations(); // O bug pode estar aqui
         List<Weather> updatedList = new ArrayList<>();
 
         for (String latlon : localizations.values()) {
@@ -77,4 +77,11 @@ public class MainViewModel extends AndroidViewModel {
     public void retrieveForecast(String latLon, WeatherCallback callback) {
         mRepository.retrieveForecast(latLon, callback);
     }
+
+//    ****Metodo para o refresh button****
+    public void refreshWeather(){
+        handler.removeCallbacks(fetchRunnable);
+        fetchAllForecasts();
+    }
+
 }

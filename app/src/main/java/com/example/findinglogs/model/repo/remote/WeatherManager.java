@@ -8,6 +8,7 @@ import com.example.findinglogs.model.model.Weather;
 import com.example.findinglogs.model.repo.remote.api.ServicesInterfaceWrapper;
 import com.example.findinglogs.model.repo.remote.api.WeatherCallback;
 import com.example.findinglogs.model.util.Logger;
+import com.google.gson.Gson;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -39,6 +40,10 @@ public class WeatherManager {
                                            @NonNull Response<Weather> resp) {
                         if (resp.isSuccessful() && resp.code() == HttpsURLConnection.HTTP_OK) {
                             assert resp.body() != null;
+                            if (Logger.ISLOGABLE) {
+                                Logger.d(TAG, "Response for lat=" + lat + ", lon=" + lon + ": " + new Gson().toJson(resp.body()));
+                            }
+
                             callback.onSuccess(resp.body());
                         } else {
                             if (Logger.ISLOGABLE)

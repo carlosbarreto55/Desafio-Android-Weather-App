@@ -1,5 +1,6 @@
 package com.example.findinglogs.view;
 
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -36,7 +37,11 @@ public class MainActivity extends AppCompatActivity {
                 weathers -> adapter.updateWeathers(weathers));
 
         fetchButton.setOnClickListener(v ->
-                Toast.makeText(MainActivity.this, "Not Implemenented yet",
+                Toast.makeText(MainActivity.this, "Refreshing...",
                 Toast.LENGTH_SHORT).show());
+                mainViewModel.refreshWeather();
+
+
+
     }
 }
